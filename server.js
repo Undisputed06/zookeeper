@@ -54,6 +54,11 @@ function filterbyQuery(query, animalsArray){
     return filteredResults;
 }
 
+function findById(id, animalsArray) {
+    const result = animalsArray.filter(animal => animal.id === id)[0];
+    return result;
+  }
+
 
 
 //returns an object based of the specified parameters
@@ -63,6 +68,16 @@ app.get('/api/animals', (req, res)=>{
     results = filterbyQuery(req.query,results);
     }
     res.json(results)
+})
+
+app.get('/api/animals/:id', (req, res) => {
+    const result = findById(req.params.id, animals);
+    if(result){
+        res.json(result)
+    }else{
+        res.send(404)
+    }
+   
 })
 
 //Makes our server listen on port 3001
